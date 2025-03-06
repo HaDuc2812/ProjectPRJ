@@ -13,6 +13,7 @@ import java.util.List;
 import model.Category;
 import model.Wines;
 import model.Customers;
+import model.Accounts;
 import utils.DBContext;
 
 /**
@@ -157,69 +158,121 @@ public class DAO {
                 e.printStackTrace();
             }
         }
+        System.out.println("Returning wine: " + wine);
         return wine;
 
-    }
+        }
 
-    public Customers login(String username, String password) {
-        String query = "select * from Customers\n"
-                + "where email = ?\n"
-                + "and password_hash = ?";
+        public Accounts login(String username, String password) {
+        String query = "select * from Accounts\n"
+            + "where email = ?\n"
+            + "and password_hash = ?";
         try {
-            conn = new DBContext().getConnection();
+            System.out.println("Connecting to database for login...");
+            conn = DBContext.getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, username);
             ps.setString(2, password);
+            System.out.println("Executing query: " + ps);
             rs = ps.executeQuery();
             while (rs.next()) {
-                return new Customers(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getDate(7));
+            System.out.println("Login successful for username: " + username);
+            return new Accounts(rs.getInt(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getDate(5));
             }
-        } catch (Exception e) {
-
+            System.out.println("Login failed for username: " + username);
+        } catch (SQLException e) {
+            System.out.println("SQL Exception during login: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            } catch (SQLException ex) {
+            // Handle closing errors
+            ex.printStackTrace();
+            }
         }
         return null;
-    }
+        }
 
-    public Customers checkCustomersExists(String username) {
-        String query = "select * from Customers\n"
-                + "where email = ?";
+        public Accounts checkAccountExists(String username) {
+        String query = "select * from Accounts\n"
+            + "where email = ?";
         try {
-            conn = new DBContext().getConnection();
+            System.out.println("Checking if account exists for username: " + username);
+            conn = DBContext.getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, username);
             rs = ps.executeQuery();
-            while (rs.next()){
-                return new Customers(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getDate(7));
+            while (rs.next()) {
+            System.out.println("Account found for username: " + username);
+            return new Accounts(rs.getInt(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getDate(5));
             }
-        } catch (Exception e) {
-
+            System.out.println("No account found for username: " + username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            } catch (SQLException ex) {
+            // Handle closing errors
+            ex.printStackTrace();
+            }
         }
         return null;
-    }
+        }
 
-    public void register(String username, String password, String telephone) {
-        String query = "insert into Customers(email,password_hash,phone,address,created_at) \n"
-                + "values(?,?,?,null,getdate())";
+        public void register(String username, String password, String telephone) {
+        String query = "INSERT INTO Accounts (email, password_hash, phone, created_at)\n"
+                + "VALUES (?, ?, ?, GETDATE());";
         try {
-            conn = new DBContext().getConnection();
+            System.out.println("Connecting to database...");
+            conn = DBContext.getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, username);
             ps.setString(2, password);
             ps.setString(3, telephone);
+            System.out.println("Executing query: " + ps);
             ps.executeUpdate();
-        } catch (Exception e) {
+            System.out.println("User registered successfully.");
+        } catch (SQLException e) {
+            System.out.println("Error during registration: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                // Handle closing errors
+                ex.printStackTrace();
+            }
         }
     }
 //    public static void main(String[] args) {
