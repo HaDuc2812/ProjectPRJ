@@ -1,0 +1,235 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #7e102c;
+}
+header {
+    background-color: #7e102c;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+@font-face {
+    font-family: PlayFair;
+    src: url('../elements/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: Agrandir;
+    src: url('../elements/Agrandir-WideBold.otf') format('opentype');
+}
+
+@font-face {
+    font-family: AgrandirNormal;
+    src: url('../elements/Agrandir-Bold.otf') format('opentype');
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+nav a {
+    
+    font-size: x-large;
+    font-family: PlayFair;
+    font-style: normal;
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    padding: 10px;
+    
+}
+nav a:hover {
+    color: #d7a9a8; /* Change to desired hover color */
+}
+footer {
+    background-color: #7e102c;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer {
+    background-color: #7e102c;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer .title_contact h3 {
+    font-family: AgrandirNormal;
+    font-size: 2m;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+
+
+.footer .contact_info p::before {
+    content: ""; /* Remove bullet point */
+}
+
+.footer a {
+    color: #d7a9a8;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.search input{
+   border-radius: 5px;
+   border-style:none;
+   padding: 0 1vw;
+   width: 30vw;
+   height: 5vh;
+
+}
+
+.cart img{
+    width: 45px;
+    height: fit-content;
+}
+
+.cart button{
+    border-radius: 5px;
+    border-style: none;
+}
+
+
+.logo img{
+    width: 120px;
+    height: fit-content;
+}
+.logo{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.poster-slider {
+    width: 85%;
+    height: fit-content;
+    padding: 20px 0;
+    margin: 0 auto; /* Center horizontally */
+}
+
+.poster img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.slick-arrows {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.slick-prev, .slick-next {
+    font-family: PlayFair;
+    background-color: rgba(126, 16, 44, 0.7);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.slick-prev {
+    left: 10px;
+}
+
+.slick-next {
+    right: 10px;
+}
+
+.slick-prev:hover, .slick-next:hover {
+    background-color: rgba(215, 169, 168, 0.7);
+}
+
+.copyright{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e1d6c1;
+    margin-top: 15vh;
+    text-align: center; /* Center text */
+}
+
+.about div {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 55vh;
+}
+
+.about h2{
+
+    font-family: AgrandirNormal;
+    font-size: 2.5em;
+    color: #7e102c;
+}
+
+.about p {
+    font-family: PlayFair;
+    font-size: 1em;
+    color: #7e102c;
+    margin: 0; /* Remove default margin */
+    padding: 5px 0; /* Add padding for spacing */
+}
+
+.start_explore{
+    background-color: #e1d6c1;
+    font-family: PlayFair;
+    font-size: 2em;
+    border-style: none;
+}
+
+.start_explore a{
+    font-style: italic;
+    color: #7e102c;
+    text-decoration: none;
+}
+
+.contact_info{
+    text-align: left;
+    
+}
+
+.footer .contact_info p {
+    font-family: PlayFair; /* Change font family to PlayFair */
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+.img_about {
+    height: 40vh;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
