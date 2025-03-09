@@ -166,4 +166,35 @@ SELECT * FROM Wines WHERE category_id = ?;
 select * from Wines where wine_id=1
 select * from Wines wi where wi.name like '%Sil%'
 SELECT * FROM dbo.Product;
+UPDATE Wines
+SET image_url = 'https://www.topwine.com.vn/uploads/product/2024_03/chateau-margaux.jpg'
+WHERE [name] = 'Château Margaux';
+
+UPDATE Wines
+SET image_url = 'https://www.topwine.com.vn/uploads/product/2021_04/Silver-Oak-2013.png'
+WHERE [name] = 'Silver Oak Cabernet';
+UPDATE Wines
+SET image_url = 'https://winepro.vn/upload/sanpham/ruou-moet-&-chandon-imperial-brut-3427.png'
+WHERE [name] = 'Moët & Chandon Brut';
+UPDATE Wines
+SET image_url = 'https://sanhruou.com/media/12148/catalog/Cloudy-Bay-Sauvignon-Blanc.jpg'
+WHERE [name] = 'Cloudy Bay Sauvignon Blanc';
+UPDATE Wines
+SET image_url = 'https://maltco.asia/wp-content/uploads/2022/05/PENFOLDS-BIN-95-GRANGE.jpg'
+WHERE [name] = 'Penfolds Grange';
+UPDATE Wines
+SET image_url = 'https://www.thebottleshop.asia/wp-content/uploads/2021/12/TBS-V-Beringer_Private_Reserve_Chardonnay.jpg'
+WHERE [name] = 'Beringer Private Reserve Chardonnay';
+UPDATE Wines
+SET image_url = 'https://cdn11.bigcommerce.com/s-f5vya34ro0/images/stencil/1280x1280/products/6011/1495/188f3a2a-f2d9-4499-adf1-a7f1c45861a5__67254.1674943318.jpg?c=1'
+WHERE [name] = 'Whispering Angel Rosé';
+UPDATE Wines
+SET image_url = 'https://winecellar.vn/wp-content/uploads/2023/05/dom-perignon.jpg'
+WHERE [name] = 'Dom Pérignon Vintage';
+UPDATE Wines
+SET image_url = 'https://www.wine-searcher.com/images/labels/14/85/11631485.jpg'
+WHERE [name] = 'Taylor Fladgate Vintage Port';
+UPDATE Wines
+SET image_url = 'https://product.hstatic.net/200000692767/product/0901407.16_d151c9a5649540f0b16f90369be2a042.png'
+WHERE [name] = 'Tokaji Aszú 5 Puttonyos';
 
