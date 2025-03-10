@@ -19,7 +19,7 @@ import model.Customers;
  *
  * @author phanh
  */
-@WebServlet(name = "SignUpControl", urlPatterns = {"/signup"})
+@WebServlet(name = "ResgisterControl", urlPatterns = {"/register"})
 public class RegisterControl extends HttpServlet {
 
     /**
@@ -45,7 +45,7 @@ public class RegisterControl extends HttpServlet {
             Accounts a = dao.checkAccountExists(username);
             if(a == null){
                 dao.register(username,password,telephone);
-                response.sendRedirect("home");
+                response.sendRedirect("login");
             }else{
                 response.sendRedirect("login");
             }

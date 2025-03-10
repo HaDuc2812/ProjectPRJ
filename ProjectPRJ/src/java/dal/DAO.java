@@ -14,7 +14,7 @@ import model.Category;
 import model.Wines;
 import model.Customers;
 import model.Accounts;
-import utils.DBContext;
+import dal.DBContext;
 
 /**
  *
@@ -246,25 +246,35 @@ public class DAO {
         }
 
         public void register(String username, String password, String telephone) {
-        String query = "INSERT INTO Accounts (email, password_hash, phone, created_at)\n"
+        String Accquery = "INSERT INTO Accounts (email, password_hash, phone, created_at)\n"
+                + "VALUES (?, ?, ?, GETDATE());";
+        String Cusquery = "INSERT INTO Customers (email, password_hash, phone, created_at)\n"
                 + "VALUES (?, ?, ?, GETDATE());";
         try {
             System.out.println("Connecting to database...");
             conn = DBContext.getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.setString(3, telephone);
+            ps1 = conn.prepareStatement(Accquery);
+            ps2 = conn.prepareStatement(Cusquery);
+            ps1.setString(1, username);
+            ps1.setString(2, password);
+            ps1.setString(3, telephone);
+            ps2.setString(1, username);
+            ps2.setString(2, password);
+            ps2.setString(3, telephone);
             System.out.println("Executing query: " + ps);
-            ps.executeUpdate();
+            ps1.executeUpdate();
+            ps2.executeUpdate();
             System.out.println("User registered successfully.");
         } catch (SQLException e) {
             System.out.println("Error during registration: " + e.getMessage());
             e.printStackTrace();
         } finally {
             try {
-                if (ps != null) {
-                    ps.close();
+                if (ps1 != null) {
+                    ps1.close();
+                }
+                if (ps2 != null) {
+                    ps2.close();
                 }
                 if (conn != null) {
                     conn.close();

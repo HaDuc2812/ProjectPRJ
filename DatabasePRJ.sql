@@ -1,7 +1,7 @@
 -- Drop the database if it exists
 IF EXISTS (SELECT * FROM sys.databases WHERE name = 'WineShop1')
 BEGIN
-    DROP DATABASE WineShop1;
+    DROP DATABASE WineShop2;
 END
 
 -- Create the database
@@ -43,6 +43,16 @@ CREATE TABLE Customers (
     address TEXT,
     created_at DATETIME DEFAULT GETDATE()
 );
+
+-- Table for storing account details
+CREATE TABLE Accounts (
+    account_id INT PRIMARY KEY IDENTITY(1,1),
+	email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) UNIQUE NOT NULL,
+    created_at DATETIME DEFAULT GETDATE(),
+);
+
 
 -- Table for storing order details
 CREATE TABLE Orders (
@@ -100,6 +110,14 @@ INSERT INTO Customers (name, email, password_hash, phone, address) VALUES
 ('Alice Johnson', 'alice@example.com', 'hashed_password_1', '555-111-2222', '789 Main St, New York, NY'),
 ('Bob Williams', 'bob@example.com', 'hashed_password_2', '555-333-4444', '456 Elm St, Los Angeles, CA');
 
+--Insert sample accounts
+INSERT INTO Accounts (email, password_hash, phone) VALUES
+('alice@example.com', 'hashed_password_1', '555-111-2222'),
+('bob@example.com', 'hashed_password_2', '555-333-4444');
+
+drop table accounts;
+
+
 -- Insert sample orders
 INSERT INTO Orders (customer_id, order_date, total_price, status, payment_status) VALUES
 (1, GETDATE(), 299.99, 'Shipped', 'Paid'),
@@ -119,6 +137,7 @@ INSERT INTO Sessions (customer_id, session_token, created_at, expires_at) VALUES
 SELECT * FROM Suppliers;
 SELECT * FROM Wines;
 SELECT * FROM Customers;
+SELECT * FROM Accounts;
 SELECT * FROM Orders;
 SELECT * FROM OrderDetails;
 SELECT * FROM Sessions;

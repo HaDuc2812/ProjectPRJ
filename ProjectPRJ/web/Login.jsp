@@ -44,7 +44,7 @@
     <section id="register" class="row justify-content-center mt-5 hidden">
         <div class="col-md-4">
             <h2 class="text-center">register</h2>
-            <form id="registerForm">
+            <form id="registerForm" action="register" method="post">
                 <div class="mb-3">
                     
                     <input name="user" type="email" class="form-control" placeholder="Email Address" required>
