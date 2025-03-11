@@ -1,4 +1,4 @@
-package utils;
+package dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,17 +18,28 @@ public class DBContext {
         }
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
+
+    public static boolean testConnection() {
+        try (Connection conn = getConnection()) {
+            return conn != null && !conn.isClosed();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private final String serverName = "localhost";
     private final String dbName = "WineShop2";
-    private final String portNumber ="9999";
-    private final String instance="";
+    private final String portNumber = "9999";
+    private final String instance = "";
     private final String userID = "sa";
-    private final String password = "123";
-//    public static void main(String[] args) {
-//        try{
-//            System.out.println(new DBContext());
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+    private final String password = "12345";
+
+    public static void main(String[] args) {
+        if (testConnection()) {
+            System.out.println("Connection successful!");
+        } else {
+            System.out.println("Connection failed.");
+        }
+    }
 }

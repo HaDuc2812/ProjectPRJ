@@ -12,13 +12,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Accounts;
 import model.Customers;
 
 /**
  *
  * @author phanh
  */
-@WebServlet(name = "SignUpControl", urlPatterns = {"/signup"})
+@WebServlet(name = "ResgisterControl", urlPatterns = {"/register"})
 public class RegisterControl extends HttpServlet {
 
     /**
@@ -41,10 +42,10 @@ public class RegisterControl extends HttpServlet {
             response.sendRedirect("login");
         }else{
             DAO dao = new DAO();
-            Customers c = dao.checkCustomersExists(username);
-            if(c == null){
+            Accounts a = dao.checkAccountExists(username);
+            if(a == null){
                 dao.register(username,password,telephone);
-                response.sendRedirect("home");
+                response.sendRedirect("login");
             }else{
                 response.sendRedirect("login");
             }

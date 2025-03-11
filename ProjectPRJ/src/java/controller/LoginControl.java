@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Accounts;
 import model.Customers;
 
 /**
@@ -36,7 +37,7 @@ public class LoginControl extends HttpServlet {
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
         DAO dao = new DAO();
-        Customers a =dao.login(username, password);
+        Accounts a =dao.login(username, password);
         if(a == null){
             request.getRequestDispatcher("Login.jsp").forward(request, response);
             request.setAttribute("mess", "Wrong username or password");
