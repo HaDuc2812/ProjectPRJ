@@ -20,7 +20,7 @@ import model.Customers;
  * @author phanh
  */
 @WebServlet(name = "PasswordControl", urlPatterns = {"/password"})
-public class RegisterControl extends HttpServlet {
+public class PasswordControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
