@@ -65,16 +65,6 @@ CREATE TABLE Customers (
     created_at DATETIME DEFAULT GETDATE()
 );
 
--- Table for storing account details
-CREATE TABLE Accounts (
-    account_id INT PRIMARY KEY IDENTITY(1,1),
-	email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    phone VARCHAR(20) UNIQUE NOT NULL,
-    created_at DATETIME DEFAULT GETDATE(),
-);
-
-
 -- Table for storing order details
 CREATE TABLE Orders (
     order_id INT PRIMARY KEY IDENTITY(1,1),
@@ -89,14 +79,18 @@ CREATE TABLE Orders (
 -- Table for storing order line items
 CREATE TABLE OrderDetails (
     order_detail_id INT PRIMARY KEY IDENTITY(1,1),
-    order_id INT,
-    wine_id INT,
+    order_id INT NOT NULL,
+    customer_id INT NULL,
+    wine_id INT NOT NULL,
     quantity INT NOT NULL,
     unit_price DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id) ON DELETE NO ACTION,
     FOREIGN KEY (wine_id) REFERENCES Wines(wine_id) ON DELETE CASCADE
 );
 
+
+drop table OrderDetails
 -- Table for storing user sessions
 CREATE TABLE Sessions (
     session_id INT PRIMARY KEY IDENTITY(1,1),
@@ -142,23 +136,17 @@ INSERT INTO Customers (name, email, password_hash, phone, address) VALUES
 ('Alice Johnson', 'alice@example.com', 'hashed_password_1', '555-111-2222', '789 Main St, New York, NY'),
 ('Bob Williams', 'bob@example.com', 'hashed_password_2', '555-333-4444', '456 Elm St, Los Angeles, CA');
 
---Insert sample accounts
-INSERT INTO Accounts (email, password_hash, phone) VALUES
-('alice@example.com', 'hashed_password_1', '555-111-2222'),
-('bob@example.com', 'hashed_password_2', '555-333-4444');
-
-drop table accounts;
-
-
 -- Insert sample orders
 INSERT INTO Orders (customer_id, order_date, total_price, status, payment_status) VALUES
 (1, GETDATE(), 299.99, 'Shipped', 'Paid'),
 (2, GETDATE(), 129.99, 'Pending', 'Unpaid');
 
 -- Insert sample order details
-INSERT INTO OrderDetails (order_id, wine_id, quantity, unit_price) VALUES
-(1, 1, 1, 299.99),
-(2, 2, 1, 129.99);
+INSERT INTO OrderDetails (order_id, customer_id, wine_id, quantity, unit_price) VALUES 
+(1, 1, 1, 2, 25.50),  -- John ordered 2 Red Wines
+(1, 1, 2, 1, 30.75),  -- John ordered 1 White Wine
+(2, 2, 1, 1, 25.50);  -- Jane ordered 1 Red Wine
+
 
 -- Insert sample sessions
 INSERT INTO Sessions (customer_id, session_token, created_at, expires_at) VALUES
@@ -170,7 +158,6 @@ SELECT * FROM Suppliers;
 SELECT * FROM Categories;
 SELECT * FROM Wines;
 SELECT * FROM Customers;
-SELECT * FROM Accounts;
 SELECT * FROM Orders;
 SELECT * FROM OrderDetails;
 SELECT * FROM Sessions;
@@ -216,4 +203,6 @@ WHERE [name] = 'Taylor Fladgate Vintage Port';
 UPDATE Wines
 SET image_url = 'https://product.hstatic.net/200000692767/product/0901407.16_d151c9a5649540f0b16f90369be2a042.png'
 WHERE [name] = 'Tokaji Aszú 5 Puttonyos';
-
+select top 1 * from Wines order by wine_id desc
+select * from OrderDetails
+select o.order_id, o.order_date, o.total_price, o.status from Orders o
