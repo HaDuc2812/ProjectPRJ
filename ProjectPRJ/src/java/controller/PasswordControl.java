@@ -19,8 +19,8 @@ import model.Customers;
  *
  * @author phanh
  */
-@WebServlet(name = "ResgisterControl", urlPatterns = { "/register" })
-public class RegisterControl extends HttpServlet {
+@WebServlet(name = "PasswordControl", urlPatterns = { "/password" })
+public class PasswordControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +35,23 @@ public class RegisterControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("user");
-        String telephone = request.getParameter("phone");
-        String password = request.getParameter("pass");
-        String re_pass = request.getParameter("re-pass");
+        String oldpassword = request.getParameter("pass");
+        String password = request.getParameter("newpass");
+        String re_pass = request.getParameter("renewpass");
         if (!password.equals(re_pass)) {
-            response.sendRedirect("login");
+            response.sendRedirect("password?error=Passwords do not match");
         } else {
             DAO dao = new DAO();
             Accounts a = dao.checkAccountExists(username);
-            if (a == null) {
-                dao.register(username, password, telephone);
-                response.sendRedirect("login");
+            if (a != null) {
+                if (!a.getPassword().equals(oldpassword)) {
+                    response.sendRedirect("password?error=Old password is incorrect");
+                } else {
+                    dao.changePassword(username, password);
+                    response.sendRedirect("login");
+                }
             } else {
-                response.sendRedirect("login");
+                response.sendRedirect("password?error=Account does not exist");
             }
         }
     }

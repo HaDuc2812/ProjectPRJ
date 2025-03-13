@@ -77,7 +77,7 @@ public class DAO {
         try {
             conn = new DBContext().getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setString(1, cid);  // Set the parameter BEFORE executing the query.
+            st.setString(1, cid); // Set the parameter BEFORE executing the query.
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 list.add(new Wines(
@@ -113,7 +113,7 @@ public class DAO {
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            // Con  vert the String id to an int before setting the parameter
+            // Con vert the String id to an int before setting the parameter
             ps.setInt(1, Integer.parseInt(id));
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -127,8 +127,7 @@ public class DAO {
                         rs.getInt("stock_quantity"),
                         rs.getString("image_url"),
                         rs.getString("description"),
-                        rs.getInt("supplier_id")
-                );
+                        rs.getInt("supplier_id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,12 +160,12 @@ public class DAO {
         System.out.println("Returning wine: " + wine);
         return wine;
 
-        }
+    }
 
-        public Accounts login(String username, String password) {
+    public Accounts login(String username, String password) {
         String query = "select * from Accounts\n"
-            + "where email = ?\n"
-            + "and password_hash = ?";
+                + "where email = ?\n"
+                + "and password_hash = ?";
         try {
             System.out.println("Connecting to database for login...");
             conn = DBContext.getConnection();
@@ -176,12 +175,12 @@ public class DAO {
             System.out.println("Executing query: " + ps);
             rs = ps.executeQuery();
             while (rs.next()) {
-            System.out.println("Login successful for username: " + username);
-            return new Accounts(rs.getInt(1),
-                rs.getString(2),
-                rs.getString(3),
-                rs.getString(4),
-                rs.getDate(5));
+                System.out.println("Login successful for username: " + username);
+                return new Accounts(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5));
             }
             System.out.println("Login failed for username: " + username);
         } catch (SQLException e) {
@@ -189,26 +188,26 @@ public class DAO {
             e.printStackTrace();
         } finally {
             try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
-            // Handle closing errors
-            ex.printStackTrace();
+                // Handle closing errors
+                ex.printStackTrace();
             }
         }
         return null;
-        }
+    }
 
-        public Accounts checkAccountExists(String username) {
+    public Accounts checkAccountExists(String username) {
         String query = "select * from Accounts\n"
-            + "where email = ?";
+                + "where email = ?";
         try {
             System.out.println("Checking if account exists for username: " + username);
             conn = DBContext.getConnection();
@@ -216,36 +215,36 @@ public class DAO {
             ps.setString(1, username);
             rs = ps.executeQuery();
             while (rs.next()) {
-            System.out.println("Account found for username: " + username);
-            return new Accounts(rs.getInt(1),
-                rs.getString(2),
-                rs.getString(3),
-                rs.getString(4),
-                rs.getDate(5));
+                System.out.println("Account found for username: " + username);
+                return new Accounts(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5));
             }
             System.out.println("No account found for username: " + username);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
-            // Handle closing errors
-            ex.printStackTrace();
+                // Handle closing errors
+                ex.printStackTrace();
             }
         }
         return null;
-        }
+    }
 
-        public void register(String username, String password, String telephone) {
+    public void register(String username, String password, String telephone) {
         String Accquery = "INSERT INTO Accounts (email, password_hash, phone, created_at)\n"
                 + "VALUES (?, ?, ?, GETDATE());";
         String Cusquery = "INSERT INTO Customers (email, password_hash, phone, created_at)\n"
@@ -253,8 +252,8 @@ public class DAO {
         try {
             System.out.println("Connecting to database...");
             conn = DBContext.getConnection();
-            ps1 = conn.prepareStatement(Accquery);
-            ps2 = conn.prepareStatement(Cusquery);
+            PreparedStatement ps1 = conn.prepareStatement(Accquery);
+            PreparedStatement ps2 = conn.prepareStatement(Cusquery);
             ps1.setString(1, username);
             ps1.setString(2, password);
             ps1.setString(3, telephone);
@@ -270,12 +269,41 @@ public class DAO {
             e.printStackTrace();
         } finally {
             try {
-                if (ps1 != null) {
-                    ps1.close();
+                if (conn != null) {
+                    conn.close();
                 }
-                if (ps2 != null) {
-                    ps2.close();
-                }
+            } catch (SQLException ex) {
+                // Handle closing errors
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void changePassword(String username, String newPassword) {
+        String Cusquery = "UPDATE Customers\n"
+                + "SET password_hash = ?\n"
+                + "WHERE email = ?";
+        String Accquery = "UPDATE Accounts\n"
+                + "SET password_hash = ?\n"
+                + "WHERE email = ?";
+        try {
+            System.out.println("Connecting to database...");
+            conn = DBContext.getConnection();
+            PreparedStatement ps1 = conn.prepareStatement(Accquery);
+            PreparedStatement ps2 = conn.prepareStatement(Cusquery);
+            ps2.setString(1, newPassword);
+            ps2.setString(2, username);
+            ps1.setString(1, newPassword);
+            ps1.setString(2, username);
+            System.out.println("Executing query: " + ps);
+            ps1.executeUpdate();
+            ps2.executeUpdate();
+            System.out.println("Password changed successfully.");
+        } catch (SQLException e) {
+            System.out.println("Error during password change: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
                 if (conn != null) {
                     conn.close();
                 }
