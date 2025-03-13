@@ -19,17 +19,17 @@ import model.Customers;
  *
  * @author phanh
  */
-@WebServlet(name = "PasswordControl", urlPatterns = {"/password"})
+@WebServlet(name = "PasswordControl", urlPatterns = { "/password" })
 public class PasswordControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,35 +38,36 @@ public class PasswordControl extends HttpServlet {
         String oldpassword = request.getParameter("pass");
         String password = request.getParameter("newpass");
         String re_pass = request.getParameter("renewpass");
-        if(!password.equals(re_pass)){
+        if (!password.equals(re_pass)) {
             response.sendRedirect("password?error=Passwords do not match");
-        }else{
+        } else {
             DAO dao = new DAO();
             Accounts a = dao.checkAccountExists(username);
-            if(a != null){
-                if(!a.getPassword().equals(oldpassword)){
+            if (a != null) {
+                if (!a.getPassword().equals(oldpassword)) {
                     response.sendRedirect("password?error=Old password is incorrect");
-                }else{
+                } else {
                     dao.changePassword(username, password);
                     response.sendRedirect("login");
                 }
-            }else{
+            } else {
                 response.sendRedirect("password?error=Account does not exist");
             }
         }
-}
+    }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -74,13 +75,13 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -91,7 +92,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

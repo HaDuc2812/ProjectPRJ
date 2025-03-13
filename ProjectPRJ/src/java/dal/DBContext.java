@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class DBContext {
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=WineShop2";
-    private static final String USERNAME = "sa";           // Update with your username
-    private static final String PASSWORD = "12345";  // Update with your password
+    private static final String USERNAME = "sa"; // Update with your username
+    private static final String PASSWORD = "12345"; // Update with your password
 
     public static Connection getConnection() throws SQLException {
         try {
