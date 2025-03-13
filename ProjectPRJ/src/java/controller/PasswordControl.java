@@ -35,17 +35,23 @@ public class PasswordControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("user");
-        String password = request.getParameter("pass");
-        String re_pass = request.getParameter("re-pass");
-        if(!pass.equals(re_pass)){
-            response.sendRedirect("password");
+        String oldpassword = request.getParameter("pass");
+        String password = request.getParameter("newpass");
+        String re_pass = request.getParameter("renewpass");
+        if(!password.equals(re_pass)){
+            response.sendRedirect("password?error=Passwords do not match");
         }else{
             DAO dao = new DAO();
+            Accounts a = dao.checkAccountExists(username);
             if(a != null){
-                dao.register(username,password);
-                response.sendRedirect("login");
+                if(!a.getPassword().equals(oldpassword)){
+                    response.sendRedirect("password?error=Old password is incorrect");
+                }else{
+                    dao.changePassword(username, password);
+                    response.sendRedirect("login");
+                }
             }else{
-                response.sendRedirect("password");
+                response.sendRedirect("password?error=Account does not exist");
             }
         }
 }

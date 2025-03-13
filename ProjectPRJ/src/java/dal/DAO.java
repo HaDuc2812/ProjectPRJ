@@ -252,10 +252,8 @@ public class DAO {
         try {
             System.out.println("Connecting to database...");
             conn = DBContext.getConnection();
-            PreparedStatement ps1 = null;
-            PreparedStatement ps2 = null;
-            ps1 = conn.prepareStatement(Accquery);
-            ps2 = conn.prepareStatement(Cusquery);
+            PreparedStatement ps1 = conn.prepareStatement(Accquery);
+            PreparedStatement ps2 = conn.prepareStatement(Cusquery);
             ps1.setString(1, username);
             ps1.setString(2, password);
             ps1.setString(3, telephone);
@@ -291,10 +289,8 @@ public class DAO {
         try {
             System.out.println("Connecting to database...");
             conn = DBContext.getConnection();
-            PreparedStatement ps1 = null;
-            prepareStatement ps2 = null;
-            ps2 = conn.prepareStatement(Accquery);
-            ps1 = conn.prepareStatement(Cusquery);
+            PreparedStatement ps1 = conn.prepareStatement(Accquery);
+            PreparedStatement ps2 = conn.prepareStatement(Cusquery);
             ps2.setString(1, newPassword);
             ps2.setString(2, username);
             ps1.setString(1, newPassword);
