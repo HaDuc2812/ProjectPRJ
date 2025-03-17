@@ -5,6 +5,10 @@
         <group>
             <file>file:/C:/Users/nvg/Documents/GitHub/ProjectPRJ/ProjectPRJ/src/java/dal/DAO.java</file>
             <file>file:/C:/Users/nvg/Documents/GitHub/ProjectPRJ/ProjectPRJ/src/java/controller/RegisterControl.java</file>
+            <file>file:/C:/Users/nvg/Documents/GitHub/ProjectPRJ/ProjectPRJ/src/java/dal/DBContext.java</file>
+            <file>file:/C:/Users/nvg/Documents/GitHub/ProjectPRJ/ProjectPRJ/src/java/model/Accounts.java</file>
+            <file>file:/C:/Users/nvg/Documents/GitHub/ProjectPRJ/ProjectPRJ/web/Login.jsp</file>
+            <file>file:/C:/Users/nvg/Documents/GitHub/ProjectPRJ/ProjectPRJ/src/java/controller/LoginControl.java</file>
         </group>
     </open-files>
 </project-private>
